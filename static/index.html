@@ -17,7 +17,9 @@
       </a>
       <div class="nav-links">
         <a href="#ejercicios">Ejercicios</a>
+        <a href="#clasificacion-variables">Variables</a>
         <a href="#glosario">Glosario</a>
+        <a href="https://github.com/Yappur/TP_Analisis_De_Datos" target="_blank" rel="noopener noreferrer">Repositorio</a>
       </div>
     </nav>
   </header>
@@ -42,6 +44,324 @@
       <article id="contenido" class="panel-ejercicio" aria-live="polite">
         <p class="estado">Cargando ejercicios...</p>
       </article>
+    </section>
+
+    <section id="clasificacion-variables" class="seccion clasificacion-variables" aria-labelledby="titulo-clasificacion-variables">
+      <div class="seccion-titulo">
+        <p class="etiqueta">Guía de estudio</p>
+        <h2 id="titulo-clasificacion-variables">Clasificación de variables</h2>
+        <p>En cada ejercicio identificamos la población, variable, clasificación, elemento unitario y las dimensiones temporal y espacial.</p>
+      </div>
+
+      <div class="variables-grid">
+        <article class="variable-card">
+          <details>
+            <summary class="variable-card__header">
+              <span class="variable-card__numero">Punto 1</span>
+              <span class="variable-card__titulo">Cantidad de hermanos</span>
+              <span class="variable-badge variable-badge--discreta">Cuantitativa discreta</span>
+              <span class="variable-card__accion">Ver resolución</span>
+            </summary>
+            <div class="variable-card__content">
+              <p class="variable-enunciado">Se registra la cantidad de hermanos que tiene cada estudiante de un curso.</p>
+              <dl class="variable-datos">
+                <div>
+                  <dt>Población bajo estudio</dt>
+                  <dd>Estudiantes de un curso de la Tecnicatura en Programación (ejemplo).</dd>
+                </div>
+                <div>
+                  <dt>Variable</dt>
+                  <dd>Cantidad de hermanos.</dd>
+                </div>
+                <div>
+                  <dt>Clasificación</dt>
+                  <dd>Cuantitativa discreta.</dd>
+                </div>
+                <div>
+                  <dt>Elemento unitario</dt>
+                  <dd>Cada estudiante del curso.</dd>
+                </div>
+                <div>
+                  <dt>Dimensión temporal</dt>
+                  <dd>Ciclo lectivo 2026 (ejemplo).</dd>
+                </div>
+                <div>
+                  <dt>Dimensión espacial</dt>
+                  <dd>Un curso de la UTN-FRT, San Miguel de Tucumán (ejemplo).</dd>
+                </div>
+              </dl>
+              <div class="variable-justificacion">
+                <h3>¿Por qué?</h3>
+                <p>La variable toma solo valores enteros; no existen 1,5 hermanos.</p>
+              </div>
+            </div>
+          </details>
+        </article>
+
+        <article class="variable-card">
+          <details>
+            <summary class="variable-card__header">
+              <span class="variable-card__numero">Punto 2</span>
+              <span class="variable-card__titulo">Género musical preferido</span>
+              <span class="variable-badge variable-badge--nominal">Cualitativa nominal</span>
+              <span class="variable-card__accion">Ver resolución</span>
+            </summary>
+            <div class="variable-card__content">
+              <p class="variable-enunciado">En una encuesta se pregunta cuál es el género musical preferido: rock, folclore, cumbia, pop, tango u otro.</p>
+              <dl class="variable-datos">
+                <div>
+                  <dt>Población bajo estudio</dt>
+                  <dd>Personas encuestadas, por ejemplo estudiantes universitarios.</dd>
+                </div>
+                <div>
+                  <dt>Variable</dt>
+                  <dd>Género musical preferido.</dd>
+                </div>
+                <div>
+                  <dt>Clasificación</dt>
+                  <dd>Cualitativa nominal.</dd>
+                </div>
+                <div>
+                  <dt>Elemento unitario</dt>
+                  <dd>Cada persona encuestada.</dd>
+                </div>
+                <div>
+                  <dt>Dimensión temporal</dt>
+                  <dd>Año 2026, momento de la encuesta (ejemplo).</dd>
+                </div>
+                <div>
+                  <dt>Dimensión espacial</dt>
+                  <dd>Tucumán (ejemplo).</dd>
+                </div>
+              </dl>
+              <div class="variable-justificacion">
+                <h3>¿Por qué?</h3>
+                <p>Las categorías son nombres sin un orden natural.</p>
+              </div>
+            </div>
+          </details>
+        </article>
+
+        <article class="variable-card">
+          <details>
+            <summary class="variable-card__header">
+              <span class="variable-card__numero">Punto 3</span>
+              <span class="variable-card__titulo">Estatura en centímetros</span>
+              <span class="variable-badge variable-badge--continua">Cuantitativa continua</span>
+              <span class="variable-card__accion">Ver resolución</span>
+            </summary>
+            <div class="variable-card__content">
+              <p class="variable-enunciado">Se mide la estatura en centímetros de los estudiantes de un curso.</p>
+              <dl class="variable-datos">
+                <div>
+                  <dt>Población bajo estudio</dt>
+                  <dd>Estudiantes de un curso (ejemplo).</dd>
+                </div>
+                <div>
+                  <dt>Variable</dt>
+                  <dd>Estatura, en centímetros.</dd>
+                </div>
+                <div>
+                  <dt>Clasificación</dt>
+                  <dd>Cuantitativa continua.</dd>
+                </div>
+                <div>
+                  <dt>Elemento unitario</dt>
+                  <dd>Cada estudiante.</dd>
+                </div>
+                <div>
+                  <dt>Dimensión temporal</dt>
+                  <dd>Año 2026 (ejemplo).</dd>
+                </div>
+                <div>
+                  <dt>Dimensión espacial</dt>
+                  <dd>El curso, en la UTN-FRT (ejemplo).</dd>
+                </div>
+              </dl>
+              <div class="variable-justificacion">
+                <h3>¿Por qué?</h3>
+                <p>Puede tomar cualquier valor dentro de un intervalo (172,4 cm, 172,43 cm, …).</p>
+              </div>
+            </div>
+          </details>
+        </article>
+
+        <article class="variable-card">
+          <details>
+            <summary class="variable-card__header">
+              <span class="variable-card__numero">Punto 4</span>
+              <span class="variable-card__titulo">Satisfacción con las clases</span>
+              <span class="variable-badge variable-badge--ordinal">Cualitativa ordinal</span>
+              <span class="variable-card__accion">Ver resolución</span>
+            </summary>
+            <div class="variable-card__content">
+              <p class="variable-enunciado">Se consulta a los alumnos cómo consideran su nivel de satisfacción con las clases de Matemática: muy satisfecho, satisfecho, poco satisfecho o nada satisfecho.</p>
+              <dl class="variable-datos">
+                <div>
+                  <dt>Población bajo estudio</dt>
+                  <dd>Alumnos que cursan Matemática (ejemplo).</dd>
+                </div>
+                <div>
+                  <dt>Variable</dt>
+                  <dd>Nivel de satisfacción con las clases.</dd>
+                </div>
+                <div>
+                  <dt>Clasificación</dt>
+                  <dd>Cualitativa ordinal.</dd>
+                </div>
+                <div>
+                  <dt>Elemento unitario</dt>
+                  <dd>Cada alumno.</dd>
+                </div>
+                <div>
+                  <dt>Dimensión temporal</dt>
+                  <dd>Cuatrimestre en curso, 2026 (ejemplo).</dd>
+                </div>
+                <div>
+                  <dt>Dimensión espacial</dt>
+                  <dd>La facultad donde se dicta la materia (ejemplo).</dd>
+                </div>
+              </dl>
+              <div class="variable-justificacion">
+                <h3>¿Por qué?</h3>
+                <p>Las categorías son palabras, pero tienen un orden natural de menor a mayor satisfacción.</p>
+              </div>
+            </div>
+          </details>
+        </article>
+
+        <article class="variable-card">
+          <details>
+            <summary class="variable-card__header">
+              <span class="variable-card__numero">Punto 5</span>
+              <span class="variable-card__titulo">Tiempo de carrera</span>
+              <span class="variable-badge variable-badge--continua">Cuantitativa continua</span>
+              <span class="variable-card__accion">Ver resolución</span>
+            </summary>
+            <div class="variable-card__content">
+              <p class="variable-enunciado">Se mide el tiempo en segundos que tarda cada atleta en completar la carrera.</p>
+              <dl class="variable-datos">
+                <div>
+                  <dt>Población bajo estudio</dt>
+                  <dd>Atletas que participan de una carrera.</dd>
+                </div>
+                <div>
+                  <dt>Variable</dt>
+                  <dd>Tiempo en segundos para completar la carrera.</dd>
+                </div>
+                <div>
+                  <dt>Clasificación</dt>
+                  <dd>Cuantitativa continua.</dd>
+                </div>
+                <div>
+                  <dt>Elemento unitario</dt>
+                  <dd>Cada atleta.</dd>
+                </div>
+                <div>
+                  <dt>Dimensión temporal</dt>
+                  <dd>Fecha en que se realizó la carrera.</dd>
+                </div>
+                <div>
+                  <dt>Dimensión espacial</dt>
+                  <dd>El circuito o pista donde se corrió.</dd>
+                </div>
+              </dl>
+              <div class="variable-justificacion">
+                <h3>¿Por qué?</h3>
+                <p>El tiempo se mide en una escala continua, aunque se informe con pocos decimales.</p>
+              </div>
+            </div>
+          </details>
+        </article>
+
+        <article class="variable-card">
+          <details>
+            <summary class="variable-card__header">
+              <span class="variable-card__numero">Punto 6</span>
+              <span class="variable-card__titulo">Medio de transporte</span>
+              <span class="variable-badge variable-badge--nominal">Cualitativa nominal</span>
+              <span class="variable-card__accion">Ver resolución</span>
+            </summary>
+            <div class="variable-card__content">
+              <p class="variable-enunciado">En una encuesta se pregunta cuál es el medio de transporte que utilizan los alumnos para llegar a la universidad: colectivo, automóvil, bicicleta, motocicleta o caminando.</p>
+              <dl class="variable-datos">
+                <div>
+                  <dt>Población bajo estudio</dt>
+                  <dd>Alumnos de una universidad (ejemplo: UTN-FRT).</dd>
+                </div>
+                <div>
+                  <dt>Variable</dt>
+                  <dd>Medio de transporte utilizado.</dd>
+                </div>
+                <div>
+                  <dt>Clasificación</dt>
+                  <dd>Cualitativa nominal.</dd>
+                </div>
+                <div>
+                  <dt>Elemento unitario</dt>
+                  <dd>Cada alumno.</dd>
+                </div>
+                <div>
+                  <dt>Dimensión temporal</dt>
+                  <dd>Año 2026 (ejemplo).</dd>
+                </div>
+                <div>
+                  <dt>Dimensión espacial</dt>
+                  <dd>San Miguel de Tucumán (ejemplo).</dd>
+                </div>
+              </dl>
+              <div class="variable-justificacion">
+                <h3>¿Por qué?</h3>
+                <p>Las categorías no tienen orden.</p>
+              </div>
+            </div>
+          </details>
+        </article>
+
+        <article class="variable-card">
+          <details>
+            <summary class="variable-card__header">
+              <span class="variable-card__numero">Punto 7</span>
+              <span class="variable-card__titulo">Temperatura en Concepción</span>
+              <span class="variable-badge variable-badge--continua">Cuantitativa continua</span>
+              <span class="variable-card__accion">Ver resolución</span>
+            </summary>
+            <div class="variable-card__content">
+              <p class="variable-enunciado">Se mide la temperatura en grados Celsius de la ciudad de Concepción, Tucumán durante una semana de septiembre de 2026.</p>
+              <dl class="variable-datos">
+                <div>
+                  <dt>Población bajo estudio</dt>
+                  <dd>Mediciones de temperatura de la ciudad de Concepción (una por día de la semana).</dd>
+                </div>
+                <div>
+                  <dt>Variable</dt>
+                  <dd>Temperatura en °C.</dd>
+                </div>
+                <div>
+                  <dt>Clasificación</dt>
+                  <dd>Cuantitativa continua.</dd>
+                </div>
+                <div>
+                  <dt>Elemento unitario</dt>
+                  <dd>Cada medición diaria de temperatura.</dd>
+                </div>
+                <div>
+                  <dt>Dimensión temporal</dt>
+                  <dd>Una semana de septiembre de 2026 (el enunciado no indica cuál).</dd>
+                </div>
+                <div>
+                  <dt>Dimensión espacial</dt>
+                  <dd>Ciudad de Concepción, provincia de Tucumán.</dd>
+                </div>
+              </dl>
+              <div class="variable-justificacion">
+                <h3>¿Por qué?</h3>
+                <p>La temperatura puede tomar cualquier valor real en un intervalo.</p>
+              </div>
+            </div>
+          </details>
+        </article>
+      </div>
     </section>
 
     <section id="glosario" class="seccion glosario" aria-labelledby="titulo-glosario">
