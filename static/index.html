@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TP 1 - Probabilidad y Estadística</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" defer></script>
+  <script src="/js.js" defer></script>
+</head>
+<body>
+  <header class="encabezado">
+    <nav class="navbar" aria-label="Navegación principal">
+      <a class="marca" href="#inicio" aria-label="Ir al inicio">
+        <img src="/public/python.webp" alt="Logo del proyecto" class="logo">
+        <span>TP Estadística</span>
+      </a>
+      <div class="nav-links">
+        <a href="#ejercicios">Ejercicios</a>
+        <a href="#glosario">Glosario</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="inicio">
+    <section class="presentacion" aria-labelledby="titulo-principal">
+      <p class="etiqueta">Probabilidad y Estadística</p>
+      <h1 id="titulo-principal">Trabajo Práctico 1</h1>
+      <p>
+        Alumno: Lopez Yapur, Mateo Albero<br>
+        Materia: Probabilidad y Estadística<br>
+        Profesor: Nelson Vidaurre <br>
+      </p>
+    </section>
+
+    <section id="ejercicios" class="seccion" aria-labelledby="titulo-ejercicios">
+      <div class="seccion-titulo">
+        <p class="etiqueta">Resoluciones</p>
+        <h2 id="titulo-ejercicios">Ejercicios</h2>
+      </div>
+      <div id="menu" class="menu-ejercicios" aria-label="Lista de ejercicios"></div>
+      <article id="contenido" class="panel-ejercicio" aria-live="polite">
+        <p class="estado">Cargando ejercicios...</p>
+      </article>
+    </section>
+
+    <section id="glosario" class="seccion glosario" aria-labelledby="titulo-glosario">
+      <div class="seccion-titulo">
+        <p class="etiqueta">Conceptos clave</p>
+        <h2 id="titulo-glosario">Glosario</h2>
+      </div>
+
+      <div class="glosario-grid">
+        <article>
+          <h3>Población</h3>
+          <p>Es el conjunto completo que se quiere estudiar. Sirve para saber si las medidas se calculan tomando todos los datos disponibles.</p>
+          <p>En varios ejercicios, como el 1, se trabaja como población y la varianza divide por <strong>N</strong>.</p>
+        </article>
+
+        <article>
+          <h3>Muestra</h3>
+          <p>Es una parte de la población. Se usa cuando los datos representan una selección y no el total.</p>
+          <p>En los ejercicios 7 y 8 se trabaja con muestra, por eso la varianza divide por <strong>n - 1</strong>.</p>
+        </article>
+
+        <article>
+          <h3>Variable</h3>
+          <p>Es la característica que se observa en cada caso. Puede ser una cantidad, una categoría o una medición.</p>
+          <p>Por ejemplo, en el ejercicio 1 la variable es la cantidad de ingresos a Instagram en un día.</p>
+        </article>
+
+        <article>
+          <h3>Variable cualitativa nominal</h3>
+          <p>Describe categorías sin orden natural. Sirve para contar preferencias o tipos.</p>
+          <p>En el ejercicio 10, los lenguajes de programación son una variable cualitativa nominal; tiene sentido buscar la moda.</p>
+        </article>
+
+        <article>
+          <h3>Variable cuantitativa discreta</h3>
+          <p>Toma valores contables, normalmente enteros. Se resume con frecuencias y medidas como media o mediana.</p>
+          <p>La cantidad de errores, libros leídos o materias aprobadas son ejemplos de los ejercicios 3, 5 y 6.</p>
+        </article>
+
+        <article>
+          <h3>Variable cuantitativa continua</h3>
+          <p>Puede tomar valores con decimales dentro de un intervalo. Suele agruparse en intervalos para graficarla.</p>
+          <p>Los tiempos de CPU del ejercicio 8 son continuos porque están medidos en segundos con decimales.</p>
+        </article>
+
+        <article>
+          <h3>Frecuencia absoluta</h3>
+          <p>Indica cuántas veces aparece un valor o una clase. Se calcula contando los casos.</p>
+          <p>En una tabla, la columna <strong>f</strong> muestra esa cantidad.</p>
+        </article>
+
+        <article>
+          <h3>Frecuencia relativa</h3>
+          <p>Indica qué parte del total representa una frecuencia absoluta. Se calcula como <strong>f / n</strong>.</p>
+          <p>En el ejercicio 10 aparece junto al porcentaje de cada lenguaje.</p>
+        </article>
+
+        <article>
+          <h3>Frecuencia acumulada</h3>
+          <p>Suma las frecuencias hasta cierto valor o intervalo. Sirve para ubicar medianas, cuartiles y percentiles.</p>
+          <p>En las tablas agrupadas aparece como <strong>F</strong>.</p>
+        </article>
+
+        <article>
+          <h3>Distribución de frecuencias</h3>
+          <p>Organiza los datos en valores o intervalos con sus frecuencias. Ayuda a ver dónde se concentra la información.</p>
+          <p>Los ejercicios 7 y 9 usan intervalos, marcas de clase y frecuencia acumulada.</p>
+        </article>
+
+        <article>
+          <h3>Media</h3>
+          <p>Es el promedio. Se calcula sumando los datos y dividiendo por la cantidad de observaciones.</p>
+          <p>En datos agrupados se usa la marca de clase multiplicada por su frecuencia.</p>
+        </article>
+
+        <article>
+          <h3>Mediana</h3>
+          <p>Es el valor central cuando los datos están ordenados. Sirve para describir el centro sin depender tanto de valores extremos.</p>
+          <p>En el ejercicio 3 coincide con el cuartil 2, el decil 50 y el percentil 50.</p>
+        </article>
+
+        <article>
+          <h3>Moda</h3>
+          <p>Es el valor o categoría que más se repite. Puede no existir o puede haber más de una.</p>
+          <p>En lenguajes de programación, la moda muestra el lenguaje más frecuente.</p>
+        </article>
+
+        <article>
+          <h3>Rango</h3>
+          <p>Mide la amplitud total de los datos. Se calcula como <strong>máximo - mínimo</strong>.</p>
+          <p>Sirve como primera mirada de dispersión, aunque depende mucho de los extremos.</p>
+        </article>
+
+        <article>
+          <h3>Varianza</h3>
+          <p>Mide cuánto se alejan los datos de la media, usando diferencias al cuadrado.</p>
+          <p>Cuanto mayor es, más dispersos están los datos.</p>
+        </article>
+
+        <article>
+          <h3>Desvío estándar</h3>
+          <p>Es la raíz cuadrada de la varianza. Queda en la misma unidad que los datos originales.</p>
+          <p>En tiempos de CPU, se interpreta en segundos.</p>
+        </article>
+
+        <article>
+          <h3>Coeficiente de variación</h3>
+          <p>Compara la dispersión con la media. Se calcula como <strong>desvío estándar / media x 100</strong>.</p>
+          <p>En el ejercicio 10 se usa para comparar la dispersión relativa entre dos grupos.</p>
+        </article>
+
+        <article>
+          <h3>Cuartiles, deciles y percentiles</h3>
+          <p>Dividen los datos ordenados en partes. Los cuartiles dividen en 4, los deciles en 10 y los percentiles en 100.</p>
+          <p>P25 es Q1, P50 es la mediana y P75 es Q3.</p>
+        </article>
+
+        <article>
+          <h3>Asimetría</h3>
+          <p>Describe si los datos tienen una cola más larga hacia valores bajos o altos.</p>
+          <p>Puede ser positiva, negativa o aproximadamente simétrica.</p>
+        </article>
+
+        <article>
+          <h3>Coeficientes de Pearson y Bowley</h3>
+          <p>Son formas de medir la asimetría. Pearson usa media, moda o mediana y desvío; Bowley usa cuartiles.</p>
+          <p>En los ejercicios se informan para interpretar la forma de la distribución.</p>
+        </article>
+
+        <article>
+          <h3>Error típico</h3>
+          <p>Estima la variabilidad de la media muestral. Se calcula como el desvío estándar dividido por la raíz de la cantidad de datos.</p>
+          <p>Aparece en la estadística descriptiva del razonamiento cuantitativo del ejercicio 10.</p>
+        </article>
+
+        <article>
+          <h3>Curtosis</h3>
+          <p>Describe qué tan apuntada o plana es una distribución en comparación con una normal.</p>
+          <p>En el ejercicio 10 se interpreta junto con la asimetría.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
