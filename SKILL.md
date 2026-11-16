@@ -38,3 +38,12 @@ Esta guía sirve a cualquier persona o asistente que trabaje en este TP. El obje
 - Verifica que `resolver()` mantenga la estructura de salida esperada y que la respuesta de la API siga siendo consumible por la interfaz.
 - Para probar la aplicación, desde la raíz ejecuta `uvicorn main:app --reload`; consulta `/api/ejercicios` y el endpoint del ejercicio afectado.
 - No hay una suite automatizada configurada actualmente. No agregues una infraestructura de pruebas salvo que el cambio o el pedido lo requiera.
+
+## TP 2 (Probabilidad)
+
+- Los ejercicios están en `ejercicios_tp2/ejNN.py` (1 a 17) con la misma estructura: `TITULO`, `ENUNCIADO` y `resolver()` que devuelve bloques.
+- `probabilidad.py` tiene los helpers del TP 2 (Laplace con pandas, tablas con totales marginales, probabilidad total y Bayes). Reutiliza `bloque`, `barras` y `r` de `estadistica.py`.
+- Las probabilidades se calculan con `fractions.Fraction` para mostrar resultados exactos (1/6, 15/23) además del decimal.
+- API: `/api/tp2/ejercicios`, `/api/tp2/ejercicios/{n}` y `/api/tp2/excel/{n}` (descarga el Excel). Página: `/tp2` (`static/tp2.html`, usa el mismo `js.js` con `data-api`).
+- Excel: `python exportar_excel.py --tp2` genera `excel/tp2/ejercicio_NN.xlsx`.
+- Supuestos: en el ejercicio 5 «sucesivamente» se toma sin reposición y las figuras son J, Q y K; en el 8, P(B ∩ C) = 0 se lee del diagrama; en el 11, despertarse a tiempo equivale a llegar a tiempo.

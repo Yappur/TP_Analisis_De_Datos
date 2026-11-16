@@ -1,4 +1,6 @@
 let graficos = [];
+// Cada página indica su API en <body data-api="...">; el TP 1 usa la ruta original
+const API = document.body.dataset.api || "/api/ejercicios";
 
 function limpiarGraficos() {
   graficos.forEach((grafico) => grafico.destroy());
@@ -22,7 +24,7 @@ function tabla(columnas, filas) {
 }
 
 async function cargarMenu() {
-  const respuesta = await fetch("/api/ejercicios");
+  const respuesta = await fetch(API);
   const lista = await respuesta.json();
   const menu = document.getElementById("menu");
 
@@ -48,7 +50,7 @@ async function mostrar(numero) {
     boton.classList.toggle("activo", boton.dataset.ejercicio === String(numero));
   });
 
-  const respuesta = await fetch(`/api/ejercicios/${numero}`);
+  const respuesta = await fetch(`${API}/${numero}`);
   const ejercicio = await respuesta.json();
   limpiarGraficos();
 

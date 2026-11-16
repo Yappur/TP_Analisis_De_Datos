@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TP 2 - Probabilidad y Estadística</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" defer></script>
+  <script src="/js.js" defer></script>
+</head>
+<body data-api="/api/tp2/ejercicios">
+  <header class="encabezado">
+    <nav class="navbar" aria-label="Navegación principal">
+      <a class="marca" href="#inicio" aria-label="Ir al inicio">
+        <img src="/public/python.webp" alt="Logo del proyecto" class="logo">
+        <span>TP Estadística</span>
+      </a>
+      <div class="nav-links">
+        <a href="/">TP 1</a>
+        <a href="/tp2" class="activo" aria-current="page">TP 2</a>
+        <a href="#ejercicios">Ejercicios</a>
+        <a href="#glosario">Glosario</a>
+        <a href="https://github.com/Yappur/TP_Analisis_De_Datos" target="_blank" rel="noopener noreferrer">Repositorio</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="inicio">
+    <section class="presentacion" aria-labelledby="titulo-principal">
+      <p class="etiqueta">Probabilidad y Estadística</p>
+      <h1 id="titulo-principal">Trabajo Práctico 2</h1>
+      <p>
+        Alumno: Lopez Yapur, Mateo Albero<br>
+        Materia: Probabilidad y Estadística<br>
+        Profesor: Nelson Vidaurre <br>
+      </p>
+    </section>
+
+    <section id="ejercicios" class="seccion" aria-labelledby="titulo-ejercicios">
+      <div class="seccion-titulo">
+        <p class="etiqueta">Resoluciones</p>
+        <h2 id="titulo-ejercicios">Ejercicios</h2>
+      </div>
+      <div id="menu" class="menu-ejercicios" aria-label="Lista de ejercicios"></div>
+      <article id="contenido" class="panel-ejercicio" aria-live="polite">
+        <p class="estado">Cargando ejercicios...</p>
+      </article>
+    </section>
+
+    <section id="glosario" class="seccion glosario" aria-labelledby="titulo-glosario">
+      <div class="seccion-titulo">
+        <p class="etiqueta">Conceptos clave</p>
+        <h2 id="titulo-glosario">Glosario</h2>
+      </div>
+
+      <div class="glosario-grid">
+        <article>
+          <h3>Espacio muestral y sucesos</h3>
+          <p>El espacio muestral <strong>S</strong> es el conjunto de todos los resultados posibles de un experimento aleatorio. Un suceso es cualquier subconjunto de S.</p>
+          <p>Se trabaja en los ejercicios 1 y 2.</p>
+        </article>
+
+        <article>
+          <h3>Regla de Laplace</h3>
+          <p>Si los resultados son equiprobables: <strong>P(A) = casos favorables / casos posibles</strong>.</p>
+          <p>Se usa en los ejercicios 4, 5, 6, 7 y 17, contando los casos con pandas.</p>
+        </article>
+
+        <article>
+          <h3>Axiomas de probabilidad</h3>
+          <p>P(A) ≥ 0, P(S) = 1 y, si A ∩ B = ∅, P(A ∪ B) = P(A) + P(B). De ellos sale P(A') = 1 − P(A).</p>
+          <p>El ejercicio 15 verifica si cada Di es una distribución de probabilidad.</p>
+        </article>
+
+        <article>
+          <h3>Complementarios y excluyentes</h3>
+          <p>A y B son mutuamente excluyentes si A ∩ B = ∅. Son complementarios si además A ∪ B = S.</p>
+          <p>Todo par complementario es excluyente, pero no al revés (ejercicio 3).</p>
+        </article>
+
+        <article>
+          <h3>Probabilidad condicional</h3>
+          <p><strong>P(A/B) = P(A ∩ B) / P(B)</strong>, con P(B) &gt; 0. Es la probabilidad de A sabiendo que ocurrió B.</p>
+          <p>Aparece en los ejercicios 6, 7, 10 y 16.</p>
+        </article>
+
+        <article>
+          <h3>Independencia</h3>
+          <p>A y B son independientes si <strong>P(A ∩ B) = P(A) · P(B)</strong>, o sea, si P(A/B) = P(A).</p>
+          <p>Se analiza en los ejercicios 6, 8, 10, 16 y 17.</p>
+        </article>
+
+        <article>
+          <h3>Probabilidad total</h3>
+          <p>Si H1, …, Hn forman una partición de S: <strong>P(E) = Σ P(Hi) · P(E/Hi)</strong>.</p>
+          <p>Se aplica en los ejercicios 11 a 14.</p>
+        </article>
+
+        <article>
+          <h3>Teorema de Bayes</h3>
+          <p><strong>P(Hi/E) = P(Hi) · P(E/Hi) / P(E)</strong>. Permite «dar vuelta» la condicional.</p>
+          <p>Se aplica en los ejercicios 12, 13 y 14.</p>
+        </article>
+
+        <article>
+          <h3>Distribución de probabilidad discreta</h3>
+          <p>Asigna una probabilidad P(x) a cada valor x, con P(x) ≥ 0 y Σ P(x) = 1.</p>
+          <p>Se estudia en el ejercicio 15 (tiro de un dado).</p>
+        </article>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

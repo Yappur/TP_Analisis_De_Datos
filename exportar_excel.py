@@ -4,6 +4,7 @@ Todos los ejercicios:      python exportar_excel.py
 Solo algunos:              python exportar_excel.py 1 5 10
 Un ejercicio desde su      python -m ejercicios.ej05      (ejecutar desde la carpeta del proyecto)
 propio archivo:
+TP 2 (excel/tp2/):         python exportar_excel.py --tp2          o   python exportar_excel.py --tp2 4 12
 """
 import importlib
 import sys
@@ -18,6 +19,7 @@ from openpyxl.worksheet.properties import PageSetupProperties
 BASE = Path(__file__).parent
 sys.path.insert(0, str(BASE))  # para poder importar "ejercicios" y "estadistica" desde cualquier lado
 CARPETA_SALIDA = BASE / "excel"
+CARPETA_SALIDA_TP2 = CARPETA_SALIDA / "tp2"
 
 COLOR_TITULO = "166A7A"
 COLOR_ENCABEZADO = "D9F3F7"
@@ -26,6 +28,8 @@ LADO = Side(style="thin", color="B8CED4")
 BORDES = Border(left=LADO, right=LADO, top=LADO, bottom=LADO)
 
 ANCHOS = {"A": 34, "B": 18, "C": 18, "D": 14, "E": 14, "F": 4}  # el gráfico va desde la columna G
+# TP 2: columnas "Inciso / fórmula" y "Cálculo" más anchas (llevan las operaciones escritas)
+ANCHOS_TP2 = {"A": 44, "B": 46, "C": 22, "D": 14, "E": 14, "F": 4}
 CARACTERES_ANCHO_TEXTO = 95   # lo que entra en una línea de las celdas combinadas A:E
 FILAS_GRAFICO = 19            # filas que ocupa un gráfico
 
@@ -59,7 +63,7 @@ def agregar_grafico(hoja, grafico, fila_encabezado, fila_ultima, fila_ancla, tit
     g = BarChart()
     g.type = "col"
     g.title = titulo
-    g.y_axis.title = "Frecuencia"
+    g.y_axis.title = grafico.get("eje", "Frecuencia")
     g.gapWidth = 60
     g.width, g.height = 17, 9
     # Sin esto, las versiones nuevas de Excel pueden ocultar los ejes
@@ -109,8 +113,8 @@ def escribir_bloque(hoja, fila, bloque):
     return fila + 2
 
 
-def configurar_hoja(hoja):
-    for letra, ancho in ANCHOS.items():
+def configurar_hoja(hoja, anchos=ANCHOS):
+    for letra, ancho in anchos.items():
         hoja.column_dimensions[letra].width = ancho
     hoja.sheet_view.showGridLines = False
     # Para imprimir / pasar a PDF: horizontal y entra todo el ancho en una página
@@ -120,13 +124,13 @@ def configurar_hoja(hoja):
     hoja.sheet_properties.pageSetUpPr = PageSetupProperties(fitToPage=True)
 
 
-def exportar(modulo):
-    """Crea excel/ejercicio_NN.xlsx a partir de un módulo de ejercicios/ (TITULO, ENUNCIADO, resolver)."""
+def exportar(modulo, carpeta=CARPETA_SALIDA, anchos=ANCHOS):
+    """Crea carpeta/ejercicio_NN.xlsx a partir de un módulo de ejercicios (TITULO, ENUNCIADO, resolver)."""
     numero = int(Path(modulo.__file__).stem[2:])  # ej05.py -> 5
     libro = Workbook()
     hoja = libro.active
     hoja.title = f"Ejercicio {numero}"
-    configurar_hoja(hoja)
+    configurar_hoja(hoja, anchos)
 
     hoja["A1"] = modulo.TITULO
     hoja["A1"].font = Font(bold=True, size=16, color=COLOR_TITULO)
@@ -136,8 +140,8 @@ def exportar(modulo):
     for bloque in modulo.resolver():
         fila = escribir_bloque(hoja, fila, bloque)
 
-    CARPETA_SALIDA.mkdir(parents=True, exist_ok=True)
-    ruta = CARPETA_SALIDA / f"ejercicio_{numero:02d}.xlsx"
+    carpeta.mkdir(parents=True, exist_ok=True)
+    ruta = carpeta / f"ejercicio_{numero:02d}.xlsx"
     try:
         libro.save(ruta)
     except PermissionError:
@@ -145,16 +149,23 @@ def exportar(modulo):
     return ruta
 
 
-def numeros_disponibles():
-    return sorted(int(p.stem[2:]) for p in (BASE / "ejercicios").glob("ej[0-9][0-9].py"))
+def exportar_tp2(modulo):
+    return exportar(modulo, CARPETA_SALIDA_TP2, ANCHOS_TP2)
+
+
+def numeros_disponibles(paquete="ejercicios"):
+    return sorted(int(p.stem[2:]) for p in (BASE / paquete).glob("ej[0-9][0-9].py"))
 
 
 if __name__ == "__main__":
-    pedidos = [int(a) for a in sys.argv[1:]] or numeros_disponibles()
+    argumentos = sys.argv[1:]
+    tp2 = "--tp2" in argumentos
+    paquete = "ejercicios_tp2" if tp2 else "ejercicios"
+    pedidos = [int(a) for a in argumentos if a != "--tp2"] or numeros_disponibles(paquete)
     for n in pedidos:
         try:
-            modulo = importlib.import_module(f"ejercicios.ej{n:02d}")
+            modulo = importlib.import_module(f"{paquete}.ej{n:02d}")
         except ModuleNotFoundError:
-            print(f"Ejercicio {n}: no existe ejercicios/ej{n:02d}.py")
+            print(f"Ejercicio {n}: no existe {paquete}/ej{n:02d}.py")
             continue
-        print(f"Ejercicio {n}: {exportar(modulo)}")
+        print(f"Ejercicio {n}: {exportar_tp2(modulo) if tp2 else exportar(modulo)}")

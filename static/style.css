@@ -85,6 +85,11 @@ a {
   transition: background 160ms ease, color 160ms ease;
 }
 
+.nav-links a.activo {
+  background: var(--celeste);
+  color: var(--azul);
+}
+
 .nav-links a:hover,
 .nav-links a:focus-visible {
   background: var(--azul);
@@ -485,6 +490,7 @@ canvas {
 
   .nav-links {
     width: 100%;
+    flex-wrap: wrap;
   }
 
   .nav-links a {
