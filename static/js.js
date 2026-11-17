@@ -1,6 +1,31 @@
 let graficos = [];
+let ejercicioActual = null;
 // Cada página indica su API en <body data-api="...">; el TP 1 usa la ruta original
 const API = document.body.dataset.api || "/api/ejercicios";
+
+function inicializarTema() {
+  const guardado = localStorage.getItem("tp-estadistica-tema");
+  const tema = guardado || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  document.documentElement.dataset.theme = tema;
+  const boton = document.querySelector(".theme-toggle");
+  if (!boton) return;
+  actualizarBotonTema(boton, tema);
+  boton.addEventListener("click", () => {
+    const nuevoTema = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+    document.documentElement.dataset.theme = nuevoTema;
+    localStorage.setItem("tp-estadistica-tema", nuevoTema);
+    actualizarBotonTema(boton, nuevoTema);
+    if (ejercicioActual !== null) mostrar(ejercicioActual);
+  });
+}
+
+function actualizarBotonTema(boton, tema) {
+  const oscuro = tema === "dark";
+  boton.setAttribute("aria-pressed", String(oscuro));
+  boton.setAttribute("aria-label", oscuro ? "Activar modo claro" : "Activar modo oscuro");
+}
+
+inicializarTema();
 
 function limpiarGraficos() {
   graficos.forEach((grafico) => grafico.destroy());
@@ -46,8 +71,12 @@ async function cargarMenu() {
 }
 
 async function mostrar(numero) {
+  ejercicioActual = numero;
   document.querySelectorAll(".menu-ejercicios button").forEach((boton) => {
-    boton.classList.toggle("activo", boton.dataset.ejercicio === String(numero));
+    const activo = boton.dataset.ejercicio === String(numero);
+    boton.classList.toggle("activo", activo);
+    if (activo) boton.setAttribute("aria-current", "true");
+    else boton.removeAttribute("aria-current");
   });
 
   const respuesta = await fetch(`${API}/${numero}`);
@@ -55,8 +84,14 @@ async function mostrar(numero) {
   limpiarGraficos();
 
   let html = `
-    <h2>${ejercicio.titulo}</h2>
-    <p class="enunciado">${ejercicio.enunciado}</p>
+    <header class="ejercicio-cabecera">
+      <span class="ejercicio-numero">Ejercicio ${ejercicio.numero}</span>
+      <h2>${ejercicio.titulo}</h2>
+    </header>
+    <div class="enunciado-wrap">
+      <p class="enunciado-label">Enunciado</p>
+      <p class="enunciado">${ejercicio.enunciado}</p>
+    </div>
     <p class="enlace-excel">
       <a href="${ejercicio.excel_url}" target="_blank" rel="noopener noreferrer">
         Abrir Excel de ${ejercicio.titulo}
@@ -88,8 +123,8 @@ async function mostrar(numero) {
         datasets: bloque.grafico.series.map((serie) => ({
           label: serie.nombre,
           data: serie.valores,
-          backgroundColor: "rgba(22, 106, 122, 0.78)",
-          borderColor: "#166a7a",
+          backgroundColor: getComputedStyle(document.documentElement).getPropertyValue("--accent").trim(),
+          borderColor: getComputedStyle(document.documentElement).getPropertyValue("--accent-strong").trim(),
           borderWidth: 1,
         })),
       },
@@ -99,20 +134,20 @@ async function mostrar(numero) {
         plugins: {
           legend: {
             labels: {
-              color: "#203038",
+              color: getComputedStyle(document.documentElement).getPropertyValue("--ink").trim(),
               font: { weight: "bold" },
             },
           },
         },
         scales: {
           x: {
-            ticks: { color: "#60747d" },
+            ticks: { color: getComputedStyle(document.documentElement).getPropertyValue("--ink-soft").trim() },
             grid: { display: false },
           },
           y: {
             beginAtZero: true,
-            ticks: { color: "#60747d" },
-            grid: { color: "rgba(96, 116, 125, 0.18)" },
+            ticks: { color: getComputedStyle(document.documentElement).getPropertyValue("--ink-soft").trim() },
+            grid: { color: getComputedStyle(document.documentElement).getPropertyValue("--rule").trim() },
           },
         },
       },
