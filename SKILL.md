@@ -47,3 +47,14 @@ Esta guía sirve a cualquier persona o asistente que trabaje en este TP. El obje
 - API: `/api/tp2/ejercicios`, `/api/tp2/ejercicios/{n}` y `/api/tp2/excel/{n}` (descarga el Excel). Página: `/tp2` (`static/tp2.html`, usa el mismo `js.js` con `data-api`).
 - Excel: `python exportar_excel.py --tp2` genera `excel/tp2/ejercicio_NN.xlsx`.
 - Supuestos: en el ejercicio 5 «sucesivamente» se toma sin reposición y las figuras son J, Q y K; en el 8, P(B ∩ C) = 0 se lee del diagrama; en el 11, despertarse a tiempo equivale a llegar a tiempo.
+
+## TP 3 (Variable aleatoria discreta, binomial, Poisson y geométrica)
+
+- Ejercicios en `ejercicios_tp3/ejNN.py` (1 a 25), con la misma estructura (`TITULO`, `ENUNCIADO`, `resolver()`).
+- `distribuciones.py` tiene los helpers: `binomial`, `poisson`, `geometrica` (DataFrames con `P(X = x)` y `P(X ≤ x)`), `momentos` (E, V y σ), `bloque_distribucion` (tabla + gráfico + columnas ✓ por inciso) y `bloque_comparacion` (binomial exacta vs. Poisson).
+- Para n grande (8000, 10000) la binomial usa la recurrencia P(x + 1) = P(x)·(n − x)/(x + 1)·p/q, porque C(n, x) no entra en un float.
+- En Poisson, «más de» / «al menos» se calculan por complemento (las tablas se cortan en un x máximo).
+- Los valores se redondean solo al mostrar: 6 decimales, o 4 cifras significativas si son menores que 0,001.
+- API: `/api/tp3/ejercicios`, `/api/tp3/ejercicios/{n}`, `/api/tp3/excel/{n}`; página `/tp3`. Las rutas del TP 2 y del TP 3 se registran con `registrar_tp` en `main.py`.
+- Excel: `python exportar_excel.py --tp3` genera `excel/tp3/ejercicio_NN.xlsx` (con formato numérico para probabilidades).
+- Supuestos: en el 2 se toma X como pasajeros con boleto que se presentan; en el 11 se usa binomial con p = 200/500 (se muestra el control hipergeométrico); en el 12 b) y c) se calculan sobre los tests que pasan (y se agrega la lectura Bernoulli de la aprobación); en 21 a 24 se muestran binomial exacta y aproximación de Poisson.

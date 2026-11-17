@@ -5,6 +5,7 @@ Solo algunos:              python exportar_excel.py 1 5 10
 Un ejercicio desde su      python -m ejercicios.ej05      (ejecutar desde la carpeta del proyecto)
 propio archivo:
 TP 2 (excel/tp2/):         python exportar_excel.py --tp2          o   python exportar_excel.py --tp2 4 12
+TP 3 (excel/tp3/):         python exportar_excel.py --tp3          o   python exportar_excel.py --tp3 8 15
 """
 import importlib
 import sys
@@ -14,12 +15,14 @@ from pathlib import Path
 from openpyxl import Workbook
 from openpyxl.chart import BarChart, Reference
 from openpyxl.styles import Alignment, Border, Font, PatternFill, Side
+from openpyxl.utils import get_column_letter
 from openpyxl.worksheet.properties import PageSetupProperties
 
 BASE = Path(__file__).parent
 sys.path.insert(0, str(BASE))  # para poder importar "ejercicios" y "estadistica" desde cualquier lado
 CARPETA_SALIDA = BASE / "excel"
 CARPETA_SALIDA_TP2 = CARPETA_SALIDA / "tp2"
+CARPETA_SALIDA_TP3 = CARPETA_SALIDA / "tp3"
 
 COLOR_TITULO = "166A7A"
 COLOR_ENCABEZADO = "D9F3F7"
@@ -30,6 +33,8 @@ BORDES = Border(left=LADO, right=LADO, top=LADO, bottom=LADO)
 ANCHOS = {"A": 34, "B": 18, "C": 18, "D": 14, "E": 14, "F": 4}  # el gráfico va desde la columna G
 # TP 2: columnas "Inciso / fórmula" y "Cálculo" más anchas (llevan las operaciones escritas)
 ANCHOS_TP2 = {"A": 44, "B": 46, "C": 22, "D": 14, "E": 14, "F": 4}
+# TP 3: las tablas de distribución tienen hasta 8 columnas (x, P(X = x), P(X ≤ x) y una por inciso)
+ANCHOS_TP3 = {"A": 44, "B": 46, "C": 22, "D": 16, "E": 14, "F": 14, "G": 14, "H": 14}
 CARACTERES_ANCHO_TEXTO = 95   # lo que entra en una línea de las celdas combinadas A:E
 FILAS_GRAFICO = 19            # filas que ocupa un gráfico
 
@@ -58,7 +63,7 @@ def escribir_texto(hoja, fila, texto, relleno=None, negrita=False):
     hoja.row_dimensions[fila].height = 16 * max(1, ceil(len(texto) / CARACTERES_ANCHO_TEXTO)) + 2
 
 
-def agregar_grafico(hoja, grafico, fila_encabezado, fila_ultima, fila_ancla, titulo):
+def agregar_grafico(hoja, grafico, fila_encabezado, fila_ultima, fila_ancla, titulo, columna_ancla="G"):
     series = len(grafico["series"])
     g = BarChart()
     g.type = "col"
@@ -77,7 +82,7 @@ def agregar_grafico(hoja, grafico, fila_encabezado, fila_ultima, fila_ancla, tit
     categorias = Reference(hoja, min_col=1, min_row=fila_encabezado + 1, max_row=fila_ultima)
     g.add_data(datos, titles_from_data=True)
     g.set_categories(categorias)
-    hoja.add_chart(g, f"G{fila_ancla}")
+    hoja.add_chart(g, f"{columna_ancla}{fila_ancla}")
 
 
 def escribir_bloque(hoja, fila, bloque):
@@ -107,7 +112,9 @@ def escribir_bloque(hoja, fila, bloque):
         for i, etiqueta in enumerate(grafico["etiquetas"]):
             escribir_fila(hoja, fila, [etiqueta] + [s["valores"][i] for s in grafico["series"]])
             fila += 1
-        agregar_grafico(hoja, grafico, fila_encabezado, fila - 1, fila_inicio, bloque["subtitulo"])
+        # El gráfico va en G, o más a la derecha si la tabla tiene más de 5 columnas
+        columna_ancla = get_column_letter(max(7, len(bloque["columnas"]) + 2))
+        agregar_grafico(hoja, grafico, fila_encabezado, fila - 1, fila_inicio, bloque["subtitulo"], columna_ancla)
         fila = max(fila, fila_inicio + FILAS_GRAFICO)  # que el próximo bloque no pise el gráfico
 
     return fila + 2
@@ -124,7 +131,16 @@ def configurar_hoja(hoja, anchos=ANCHOS):
     hoja.sheet_properties.pageSetUpPr = PageSetupProperties(fitToPage=True)
 
 
-def exportar(modulo, carpeta=CARPETA_SALIDA, anchos=ANCHOS):
+def formatear_numeros(hoja):
+    """TP 3: formato numérico para probabilidades y decimales (los enteros quedan como están)."""
+    for fila in hoja.iter_rows():
+        for celda in fila:
+            v = celda.value
+            if isinstance(v, float) and not v.is_integer():
+                celda.number_format = "0.000E+00" if abs(v) < 0.001 else "0.000000" if abs(v) <= 1 else "0.0000"
+
+
+def exportar(modulo, carpeta=CARPETA_SALIDA, anchos=ANCHOS, formato_numerico=False):
     """Crea carpeta/ejercicio_NN.xlsx a partir de un módulo de ejercicios (TITULO, ENUNCIADO, resolver)."""
     numero = int(Path(modulo.__file__).stem[2:])  # ej05.py -> 5
     libro = Workbook()
@@ -139,6 +155,8 @@ def exportar(modulo, carpeta=CARPETA_SALIDA, anchos=ANCHOS):
     fila = 4
     for bloque in modulo.resolver():
         fila = escribir_bloque(hoja, fila, bloque)
+    if formato_numerico:
+        formatear_numeros(hoja)
 
     carpeta.mkdir(parents=True, exist_ok=True)
     ruta = carpeta / f"ejercicio_{numero:02d}.xlsx"
@@ -153,19 +171,25 @@ def exportar_tp2(modulo):
     return exportar(modulo, CARPETA_SALIDA_TP2, ANCHOS_TP2)
 
 
+def exportar_tp3(modulo):
+    # Mismo formato de hoja que el TP 2, con más columnas y formato numérico para las probabilidades
+    return exportar(modulo, CARPETA_SALIDA_TP3, ANCHOS_TP3, formato_numerico=True)
+
+
 def numeros_disponibles(paquete="ejercicios"):
     return sorted(int(p.stem[2:]) for p in (BASE / paquete).glob("ej[0-9][0-9].py"))
 
 
 if __name__ == "__main__":
     argumentos = sys.argv[1:]
-    tp2 = "--tp2" in argumentos
-    paquete = "ejercicios_tp2" if tp2 else "ejercicios"
-    pedidos = [int(a) for a in argumentos if a != "--tp2"] or numeros_disponibles(paquete)
+    tp2, tp3 = "--tp2" in argumentos, "--tp3" in argumentos
+    paquete = "ejercicios_tp3" if tp3 else "ejercicios_tp2" if tp2 else "ejercicios"
+    exportador = exportar_tp3 if tp3 else exportar_tp2 if tp2 else exportar
+    pedidos = [int(a) for a in argumentos if not a.startswith("--")] or numeros_disponibles(paquete)
     for n in pedidos:
         try:
             modulo = importlib.import_module(f"{paquete}.ej{n:02d}")
         except ModuleNotFoundError:
             print(f"Ejercicio {n}: no existe {paquete}/ej{n:02d}.py")
             continue
-        print(f"Ejercicio {n}: {exportar_tp2(modulo) if tp2 else exportar(modulo)}")
+        print(f"Ejercicio {n}: {exportador(modulo)}")

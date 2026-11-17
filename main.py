@@ -1,5 +1,5 @@
-"""API de los TP 1 y TP 2.  Ejecutar:  uvicorn main:app --reload
-Frontend en http://localhost:8000 (TP 1) y http://localhost:8000/tp2 (TP 2)
+"""API de los TP 1, TP 2 y TP 3.  Ejecutar:  uvicorn main:app --reload
+Frontend en http://localhost:8000 (TP 1), /tp2 (TP 2) y /tp3 (TP 3)
 Documentación automática en http://localhost:8000/docs
 """
 import importlib
@@ -9,12 +9,13 @@ from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
-from exportar_excel import CARPETA_SALIDA_TP2, exportar_tp2
+from exportar_excel import CARPETA_SALIDA_TP2, CARPETA_SALIDA_TP3, exportar_tp2, exportar_tp3
 
-app = FastAPI(title="TP 1 y TP 2 - Probabilidad y Estadística")
+app = FastAPI(title="TP 1, TP 2 y TP 3 - Probabilidad y Estadística")
 BASE = Path(__file__).parent
 NUMEROS = range(1, 11)
 NUMEROS_TP2 = range(1, 18)
+NUMEROS_TP3 = range(1, 26)
 LINKS_EXCEL = {
     1: "https://docs.google.com/spreadsheets/d/1ntUDOVLjxvnwRmPu9sbs54PqR72pIvsw/edit?usp=sharing&ouid=111584918977987168067&rtpof=true&sd=true",
     2: "https://docs.google.com/spreadsheets/d/1DN83woe-1iRDSHMkTkpv6WT_IvpNJ4FB/edit?usp=sharing&ouid=111584918977987168067&rtpof=true&sd=true",
@@ -48,37 +49,39 @@ def ver(n: int):
 
 
 # ------------------------------------------------------------
-# TP 2: misma estructura de respuesta que el TP 1
+# TP 2 y TP 3: misma estructura de respuesta que el TP 1.
+# Cada TP registra /api/tpN/ejercicios, /api/tpN/ejercicios/{n}, /api/tpN/excel/{n} y la página /tpN
 # ------------------------------------------------------------
-def cargar_tp2(n):
-    return cargar(n, "ejercicios_tp2", NUMEROS_TP2)
+def registrar_tp(tp, paquete, numeros, carpeta_excel, exportador):
+    def cargar_tp(n):
+        return cargar(n, paquete, numeros)
+
+    @app.get(f"/api/tp{tp}/ejercicios", name=f"listar_tp{tp}")
+    def listar_tp():
+        return [{"numero": n, "titulo": cargar_tp(n).TITULO} for n in numeros]
+
+    @app.get(f"/api/tp{tp}/ejercicios/{{n}}", name=f"ver_tp{tp}")
+    def ver_tp(n: int):
+        ej = cargar_tp(n)
+        return {"numero": n, "titulo": ej.TITULO, "enunciado": ej.ENUNCIADO,
+                "excel_url": f"/api/tp{tp}/excel/{n}", "bloques": ej.resolver()}
+
+    @app.get(f"/api/tp{tp}/excel/{{n}}", name=f"excel_tp{tp}")
+    def excel_tp(n: int):
+        """Descarga excel/tpN/ejercicio_NN.xlsx (si todavía no existe, se genera con OpenPyXL)."""
+        ruta = carpeta_excel / f"ejercicio_{n:02d}.xlsx"
+        if not ruta.exists():
+            ruta = exportador(cargar_tp(n))
+        return FileResponse(ruta, filename=f"TP{tp}_{ruta.name}",
+                            media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+
+    @app.get(f"/tp{tp}", include_in_schema=False, name=f"pagina_tp{tp}")
+    def pagina_tp():
+        return FileResponse(BASE / "static" / f"tp{tp}.html")
 
 
-@app.get("/api/tp2/ejercicios")
-def listar_tp2():
-    return [{"numero": n, "titulo": cargar_tp2(n).TITULO} for n in NUMEROS_TP2]
-
-
-@app.get("/api/tp2/ejercicios/{n}")
-def ver_tp2(n: int):
-    ej = cargar_tp2(n)
-    return {"numero": n, "titulo": ej.TITULO, "enunciado": ej.ENUNCIADO,
-            "excel_url": f"/api/tp2/excel/{n}", "bloques": ej.resolver()}
-
-
-@app.get("/api/tp2/excel/{n}")
-def excel_tp2(n: int):
-    """Descarga excel/tp2/ejercicio_NN.xlsx (si todavía no existe, se genera con OpenPyXL)."""
-    ruta = CARPETA_SALIDA_TP2 / f"ejercicio_{n:02d}.xlsx"
-    if not ruta.exists():
-        ruta = exportar_tp2(cargar_tp2(n))
-    return FileResponse(ruta, filename=f"TP2_{ruta.name}",
-                        media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-
-
-@app.get("/tp2", include_in_schema=False)
-def pagina_tp2():
-    return FileResponse(BASE / "static" / "tp2.html")
+registrar_tp(2, "ejercicios_tp2", NUMEROS_TP2, CARPETA_SALIDA_TP2, exportar_tp2)
+registrar_tp(3, "ejercicios_tp3", NUMEROS_TP3, CARPETA_SALIDA_TP3, exportar_tp3)
 
 
 # El frontend (carpeta static) se sirve en "/"; va al final para no pisar la API

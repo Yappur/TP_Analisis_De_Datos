@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TP 3 - Probabilidad y Estadística</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" defer></script>
+  <script src="/js.js" defer></script>
+</head>
+<body data-api="/api/tp3/ejercicios">
+  <header class="encabezado">
+    <nav class="navbar" aria-label="Navegación principal">
+      <a class="marca" href="#inicio" aria-label="Ir al inicio">
+        <img src="/public/python.webp" alt="Logo del proyecto" class="logo">
+        <span>TP Estadística</span>
+      </a>
+      <div class="nav-links">
+        <a href="/">TP 1</a>
+        <a href="/tp2">TP 2</a>
+        <a href="/tp3" class="activo" aria-current="page">TP 3</a>
+        <a href="#ejercicios">Ejercicios</a>
+        <a href="#glosario">Glosario</a>
+        <a href="https://github.com/Yappur/TP_Analisis_De_Datos" target="_blank" rel="noopener noreferrer">Repositorio</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="inicio">
+    <section class="presentacion" aria-labelledby="titulo-principal">
+      <p class="etiqueta">Probabilidad y Estadística</p>
+      <h1 id="titulo-principal">Trabajo Práctico 3</h1>
+      <p>
+        Alumno: Lopez Yapur, Mateo Albero<br>
+        Materia: Probabilidad y Estadística<br>
+        Profesor: Nelson Vidaurre <br>
+      </p>
+    </section>
+
+    <section id="ejercicios" class="seccion" aria-labelledby="titulo-ejercicios">
+      <div class="seccion-titulo">
+        <p class="etiqueta">Resoluciones</p>
+        <h2 id="titulo-ejercicios">Ejercicios</h2>
+      </div>
+      <div id="menu" class="menu-ejercicios" aria-label="Lista de ejercicios"></div>
+      <article id="contenido" class="panel-ejercicio" aria-live="polite">
+        <p class="estado">Cargando ejercicios...</p>
+      </article>
+    </section>
+
+    <section id="glosario" class="seccion glosario" aria-labelledby="titulo-glosario">
+      <div class="seccion-titulo">
+        <p class="etiqueta">Conceptos clave</p>
+        <h2 id="titulo-glosario">Glosario</h2>
+      </div>
+
+      <div class="glosario-grid">
+        <article>
+          <h3>Variable aleatoria discreta y FMP</h3>
+          <p>Toma valores aislados x con probabilidades f(x) = P(X = x). Es una FMP válida si <strong>f(x) ≥ 0</strong> y <strong>Σ f(x) = 1</strong>.</p>
+          <p>Se usa en los ejercicios 1, 4, 5 y 6.</p>
+        </article>
+
+        <article>
+          <h3>Esperanza</h3>
+          <p><strong>E(X) = Σ x·f(x)</strong>: el valor promedio a largo plazo. Para una función: E[g(X)] = Σ g(x)·f(x).</p>
+          <p>Se calcula en los ejercicios 2, 3, 7 y 25.</p>
+        </article>
+
+        <article>
+          <h3>Varianza y desvío</h3>
+          <p><strong>V(X) = E(X²) − [E(X)]²</strong> y σ = √V(X). Miden la dispersión alrededor de la esperanza.</p>
+          <p>Se calculan en los ejercicios 2, 7, 12, 23 y 24.</p>
+        </article>
+
+        <article>
+          <h3>Exactamente, al menos, como máximo</h3>
+          <p>Exactamente k: X = k. Al menos k: X ≥ k. Como máximo / a lo sumo k: X ≤ k. Menos de k: X ≤ k − 1. Más de k: X ≥ k + 1.</p>
+          <p>En las tablas, la marca ✓ indica qué valores de x se suman en cada inciso.</p>
+        </article>
+
+        <article>
+          <h3>Distribución binomial</h3>
+          <p>n ensayos independientes con probabilidad de éxito p constante: <strong>P(X = x) = C(n, x)·p<sup>x</sup>·q<sup>n−x</sup></strong>. E(X) = n·p y V(X) = n·p·q.</p>
+          <p>Ejercicios 8 a 14 y 24.</p>
+        </article>
+
+        <article>
+          <h3>Distribución de Poisson</h3>
+          <p>Cantidad de eventos en un intervalo con media λ: <strong>P(X = x) = e<sup>−λ</sup>·λ<sup>x</sup> / x!</strong>. E(X) = V(X) = λ. Si cambia el intervalo, λ cambia en proporción.</p>
+          <p>Ejercicios 15 a 20.</p>
+        </article>
+
+        <article>
+          <h3>Aproximación de Poisson a la binomial</h3>
+          <p>Si n es grande y p es chico (n ≥ 20, p ≤ 0,05), B(n, p) ≈ Poisson(λ = n·p).</p>
+          <p>Ejercicios 21 a 24, siempre comparada con la binomial exacta.</p>
+        </article>
+
+        <article>
+          <h3>Distribución geométrica</h3>
+          <p>X = número de ensayos hasta el primer éxito: <strong>P(X = x) = q<sup>x−1</sup>·p</strong>, con E(X) = 1/p.</p>
+          <p>Ejercicio 25 (costo esperado).</p>
+        </article>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
