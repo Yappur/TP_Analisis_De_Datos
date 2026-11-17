@@ -17,10 +17,12 @@ def resolver():
     hiper = sum(comb(GANADORES, k) * comb(TOTAL - GANADORES, N - k) for k in range(3, 6)) / comb(TOTAL, N)
     filas = [
         fila("p = 200 / 500", "probabilidad de que un billete gane", PROB),
-        fila("P(X ≥ 3) = P(3) + P(4) + P(5)", "10·0,4³·0,6² + 5·0,4⁴·0,6 + 0,4⁵", p),
+        fila("P(X ≥ 3), hipergeométrica exacta",
+             "Σ[k=3..5] C(200,k)·C(300,5−k) / C(500,5)", hiper),
+        fila("Aprox. binomial: P(X ≥ 3)",
+             "10·0,4³·0,6² + 5·0,4⁴·0,6 + 0,4⁵", p),
     ]
-    return [bloque_distribucion("X ~ B(n = 5, p = 0,4): billetes que ganan al menos su costo", t, marcas),
+    return [bloque_distribucion("Aproximación binomial: X ~ B(n = 5, p = 0,4)", t, marcas),
             bloque_resolucion(filas, notas=[
-                "Se usa la binomial porque se compran 5 de 500 billetes (5/500 = 1% < 5%): extraer sin reposición "
-                "casi no cambia p.",
-                f"Control con la hipergeométrica exacta: {hiper:.6f} (diferencia {abs(hiper - p):.4f})."])]
+                "La muestra es sin reposición: el resultado principal es hipergeométrico exacto.",
+                f"La aproximación binomial da {p:.6f}; la hipergeométrica exacta, {hiper:.6f}."])]

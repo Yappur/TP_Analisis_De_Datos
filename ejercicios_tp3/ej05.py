@@ -15,7 +15,7 @@ def resolver():
     c = Fr(1, suma)
     t["f(x) = c·(x² + 1)"] = [c * v for v in t["x² + 1"]]
     filas = [
-        fila("Σ c·(x² + 1) = 1", "c·(1 + 2 + 5 + 10) = 1  →  18·c = 1", suma, porcentaje=False),
+        fila("Σ c·(x² + 1) = 1", "c·(1 + 2 + 5 + 10) = 1  →  18·c = 1", 1, porcentaje=False),
         fila("c = 1 / 18", f"c = {c}", c, porcentaje=False),
     ]
     return [bloque_resolucion(filas),

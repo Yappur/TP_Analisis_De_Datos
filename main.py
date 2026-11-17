@@ -3,15 +3,26 @@ Frontend en http://localhost:8000 (TP 1), /tp2 (TP 2) y /tp3 (TP 3)
 Documentación automática en http://localhost:8000/docs
 """
 import importlib
+from contextlib import asynccontextmanager
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
+from chatbot import search as chatbot_search
+from chatbot.router import router as chatbot_router
 from exportar_excel import CARPETA_SALIDA_TP2, CARPETA_SALIDA_TP3, exportar_tp2, exportar_tp3
 
-app = FastAPI(title="TP 1, TP 2 y TP 3 - Probabilidad y Estadística")
+@asynccontextmanager
+async def lifespan(_app: FastAPI):
+    # Al arrancar: el chatbot lee los .md de chatbot/knowledge y arma su índice en memoria.
+    # Si editás un .md, reiniciá el servidor para que tome los cambios.
+    chatbot_search.cargar()
+    yield
+
+
+app = FastAPI(title="TP 1, TP 2 y TP 3 - Probabilidad y Estadística", lifespan=lifespan)
 BASE = Path(__file__).parent
 NUMEROS = range(1, 11)
 NUMEROS_TP2 = range(1, 18)
@@ -82,6 +93,9 @@ def registrar_tp(tp, paquete, numeros, carpeta_excel, exportador):
 
 registrar_tp(2, "ejercicios_tp2", NUMEROS_TP2, CARPETA_SALIDA_TP2, exportar_tp2)
 registrar_tp(3, "ejercicios_tp3", NUMEROS_TP3, CARPETA_SALIDA_TP3, exportar_tp3)
+
+# Se registra antes de montar static para que el catch-all no intercepte la API.
+app.include_router(chatbot_router)
 
 
 # El frontend (carpeta static) se sirve en "/"; va al final para no pisar la API

@@ -21,8 +21,8 @@ def resolver():
     ]
     return [bloque_tabla("Tabla de cálculo", t),
             bloque_resolucion(filas, notas=[
-                "X se toma como la cantidad de pasajeros con boleto que se presentan (es la variable de la tabla).",
-                f"En promedio se presentan {r6(e)} pasajeros, con una dispersión de ±{s:.4f}."])]
+                "La distribución dada corresponde al número de boletos vendidos: E(X), V(X) y σ describen esa variable.",
+                "No se proporcionan datos sobre asistencia; por tanto, no se puede determinar cuántos pasajeros se presentan al vuelo."])]
 
 
 def r6(x):
